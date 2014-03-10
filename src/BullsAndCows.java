@@ -2,9 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,8 +36,6 @@ public class BullsAndCows {
                 System.out.println("Please input a 4-digit number with no duplicate digits: ");
             }
             char[] chars = input.toCharArray();
-            int bulls = 0;
-            int cows = 0;
             if (chars.length != 4) {
                 System.out.println("Not a valid guess.");
                 continue;
@@ -58,19 +54,9 @@ public class BullsAndCows {
             if (guessNumber[3] == 0) {
                 continue;
             }
-
-            for (int i = 0; i < 4; i++) {
-                int curNum = chars[i] - 48;
-                if (curNum == choseNum[i]) {
-                    bulls++;
-                } else {
-                    for (int j = 0; j < 4; j++) {
-                        if (curNum == choseNum[j]) {
-                            cows++;
-                        }
-                    }
-                }
-            }
+            Game game = new Game(choseNum, guessNumber).run();
+            int bulls = game.getBulls();
+            int cows = game.getCows();
             if (bulls == 4) {
                 System.out.println("Congratulations! You have won!");
                 guess = true;
@@ -79,4 +65,5 @@ public class BullsAndCows {
             }
         } while (!guess);
     }
+
 }
