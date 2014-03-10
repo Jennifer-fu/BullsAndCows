@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
  */
 public class BullsAndCows {
 
+    public static final int ANSWER_LENGTH = 4;
+
     public static void main(String[] args) {
 
         System.out.print("Guess a 4-digit number with no duplicate digits: ");
@@ -25,7 +27,7 @@ public class BullsAndCows {
                 System.out.println("Please input a 4-digit number with no duplicate digits: ");
             }
 
-            Game game = new Game();
+            Game game = new Game(ANSWER_LENGTH);
             try {
                 game.run(input);
             } catch (InputNotValidException e) {
@@ -33,7 +35,7 @@ public class BullsAndCows {
                 continue;
             }
 
-            if (game.getBulls() == 4) {
+            if (game.getBulls() == ANSWER_LENGTH) {
                 System.out.println("Congratulations! You have won!");
                 guess = true;
             } else {
