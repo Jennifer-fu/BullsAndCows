@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,15 +12,6 @@ import java.util.Random;
 public class BullsAndCows {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        Random gen = new Random();
-        for (int i = 0; i < 9; i++) {
-            int j = gen.nextInt(9);
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
-        }
-        int[] choseNum = Arrays.copyOf(nums, 4);
 
         System.out.print("Guess a 4-digit number with no duplicate digits: ");
         boolean guess = false;
@@ -37,7 +26,7 @@ public class BullsAndCows {
             }
             char[] chars = input.toCharArray();
             if (chars.length != 4) {
-                System.out.println("Not a valid guess.");
+                System.out.println("Digit must be a 4-digit number.");
                 continue;
             }
 
@@ -54,7 +43,7 @@ public class BullsAndCows {
             if (guessNumber[3] == 0) {
                 continue;
             }
-            Game game = new Game(choseNum, guessNumber).run();
+            Game game = new Game(guessNumber).run();
             int bulls = game.getBulls();
             int cows = game.getCows();
             if (bulls == 4) {

@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Random;
+
 /**
 * Created with IntelliJ IDEA.
 * User: fujunfeng
@@ -6,14 +9,24 @@
 * To change this template use File | Settings | File Templates.
 */
 public class Game {
-    private int[] choseNum;
     private int[] guessNumber;
     private int bulls;
     private int cows;
 
-    public Game(int[] choseNum, int... guessNumber) {
-        this.choseNum = choseNum;
+    public Game(int... guessNumber) {
         this.guessNumber = guessNumber;
+    }
+
+    private int[] generateAnswer() {
+        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+        Random gen = new Random();
+        for (int i = 0; i < 9; i++) {
+            int j = gen.nextInt(9);
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+        return Arrays.copyOf(nums, 4);
     }
 
     public int getBulls() {
@@ -25,12 +38,13 @@ public class Game {
     }
 
     public Game run() {
+        int[] answer = generateAnswer();
         for (int i = 0; i < 4; i++) {
-            if (guessNumber[i] == choseNum[i]) {
+            if (guessNumber[i] == answer[i]) {
                 bulls++;
             } else {
                 for (int j = 0; j < 4; j++) {
-                    if (guessNumber[i] == choseNum[j]) {
+                    if (guessNumber[i] == answer[j]) {
                         cows++;
                     }
                 }
