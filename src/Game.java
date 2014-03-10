@@ -28,6 +28,11 @@ public class Game {
     public Game run(String input) throws InputNotValidException {
         int[] guessNumber = preProcess(input);
         int[] answer = generateAnswer();
+        calculateCount(guessNumber, answer);
+        return this;
+    }
+
+    private void calculateCount(int[] guessNumber, int[] answer) {
         for (int i = 0; i < answerLength; i++) {
             if (guessNumber[i] == answer[i]) {
                 bulls++;
@@ -39,7 +44,6 @@ public class Game {
                 }
             }
         }
-        return this;
     }
 
     private int[] preProcess(String input) throws InputNotValidException {
@@ -60,14 +64,14 @@ public class Game {
     }
 
     private int[] generateAnswer() {
-        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] validNumbers = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
         Random gen = new Random();
         for (int i = 0; i < 9; i++) {
             int j = gen.nextInt(9);
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
+            int temp = validNumbers[i];
+            validNumbers[i] = validNumbers[j];
+            validNumbers[j] = temp;
         }
-        return Arrays.copyOf(nums, answerLength);
+        return Arrays.copyOf(validNumbers, answerLength);
     }
 }
