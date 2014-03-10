@@ -30,25 +30,37 @@ public class BullsAndCows {
         boolean guess = false;
 
         do {
-//            Scanner input = new Scanner(System.in);
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String input = "";
             try {
                 input = reader.readLine();
             } catch (IOException e) {
-                System.out.println("---");
+                System.out.println("Please input a 4-digit number with no duplicate digits: ");
             }
             char[] chars = input.toCharArray();
             int bulls = 0;
             int cows = 0;
             if (chars.length != 4) {
                 System.out.println("Not a valid guess.");
+                continue;
             }
+
+            int[] guessNumber = new int[4];
             for (int i = 0; i < 4; i++) {
                 int curNum = chars[i] - 48;
                 if (curNum > 9 || curNum < 1) {
-                    System.out.println("Digit must be ge greater 0 and lower 10.");
+                    System.out.println("Digit must be a 4-digit number within 1 to 9.");
+                    break;
                 }
+                guessNumber[i] = curNum;
+            }
+
+            if (guessNumber[3] == 0) {
+                continue;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int curNum = chars[i] - 48;
                 if (curNum == choseNum[i]) {
                     bulls++;
                 } else {
@@ -63,7 +75,7 @@ public class BullsAndCows {
                 System.out.println("Congratulations! You have won!");
                 guess = true;
             } else {
-                System.out.println(String.format("Your Score is "+bulls+" bulls and "+cows+" cows"));
+                System.out.println("Your Score is " + bulls + " bulls and " + cows + " cows");
             }
         } while (!guess);
     }
