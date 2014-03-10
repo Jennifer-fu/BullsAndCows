@@ -9,12 +9,24 @@ import java.util.Random;
 * To change this template use File | Settings | File Templates.
 */
 public class Game {
-    private int[] guessNumber;
     private int bulls;
     private int cows;
 
-    public Game(int... guessNumber) {
-        this.guessNumber = guessNumber;
+    private int[] preProcess(String input) throws InputNotValidException {
+        char[] chars = input.toCharArray();
+        if (chars.length != 4) {
+            throw new InputNotValidException("Digit must be a 4-digit number.");
+        }
+
+        int[] guessNumber = new int[4];
+        for (int i = 0; i < 4; i++) {
+            int curNum = chars[i] - 48;
+            if (curNum > 9 || curNum < 1) {
+                throw new InputNotValidException("Digit must be a 4-digit number within 1 to 9.");
+            }
+            guessNumber[i] = curNum;
+        }
+        return guessNumber;
     }
 
     private int[] generateAnswer() {
@@ -37,7 +49,8 @@ public class Game {
         return cows;
     }
 
-    public Game run() {
+    public Game run(String input) throws InputNotValidException {
+        int[] guessNumber = preProcess(input);
         int[] answer = generateAnswer();
         for (int i = 0; i < 4; i++) {
             if (guessNumber[i] == answer[i]) {
