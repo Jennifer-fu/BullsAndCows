@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,16 +12,16 @@ public class Game {
     private int cows;
     private int answerLength;
 
-    public Game(int answerLength){
+    public Game(int answerLength) {
         this.answerLength = answerLength;
     }
 
-    public int getBulls() {
-        return bulls;
+    public boolean over() {
+        return this.bulls == this.answerLength;
     }
 
-    public int getCows() {
-        return cows;
+    public String result() {
+        return String.format("%dB%dC", this.bulls, this.cows);
     }
 
     public Game run(String input) throws InputNotValidException {
@@ -48,10 +47,25 @@ public class Game {
 
     private int[] preProcess(String input) throws InputNotValidException {
         char[] chars = input.toCharArray();
-        if (chars.length != answerLength) {
-            throw new InputNotValidException("Digit must be a 4-digit number.");
-        }
 
+        checkLengthValid(chars);
+        int[] guessNumber = changeToNumber(chars);
+        checkDuplication(guessNumber);
+
+        return guessNumber;
+    }
+
+    private void checkDuplication(int[] guessNumber) throws InputNotValidException {
+        HashSet<Integer> inputNumbers = new HashSet<Integer>();
+        for (int i = 0; i < answerLength; i++) {
+            if (inputNumbers.contains(guessNumber[i])) {
+                throw new InputNotValidException("Digit can not be duplicated.");
+            }
+            inputNumbers.add(guessNumber[i]);
+        }
+    }
+
+    private int[] changeToNumber(char[] chars) throws InputNotValidException {
         int[] guessNumber = new int[answerLength];
         for (int i = 0; i < answerLength; i++) {
             int curNum = chars[i] - 48;
@@ -61,6 +75,12 @@ public class Game {
             guessNumber[i] = curNum;
         }
         return guessNumber;
+    }
+
+    private void checkLengthValid(char[] chars) throws InputNotValidException {
+        if (chars.length != answerLength) {
+            throw new InputNotValidException("Digit must be a 4-digit number.");
+        }
     }
 
     private int[] generateAnswer() {

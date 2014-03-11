@@ -35,11 +35,11 @@ public class BullsAndCows {
                 continue;
             }
 
-            if (game.getBulls() == ANSWER_LENGTH) {
+            if (game.over()) {
                 System.out.println("Congratulations! You have won!");
                 guess = true;
             } else {
-                System.out.println("Your Score is " + game.getBulls() + " bulls and " + game.getCows() + " cows");
+                System.out.println("Your Score is: "+game.result());
             }
         } while (!guess);
     }
