@@ -11,10 +11,18 @@ public class Game {
     private int bulls;
     private int cows;
     private int answerLength;
+    private int[] answer;
 
     public Game(int answerLength) {
         this.answerLength = answerLength;
+        this.answer = generateAnswer(answerLength);
     }
+
+    protected Game(int[] answer){
+        this.answer = answer;
+        this.answerLength = answer.length;
+    }
+
 
     public boolean over() {
         return this.bulls == this.answerLength;
@@ -26,12 +34,13 @@ public class Game {
 
     public Game run(String input) throws InputNotValidException {
         int[] guessNumber = preProcess(input);
-        int[] answer = generateAnswer();
         calculateCount(guessNumber, answer);
         return this;
     }
 
     private void calculateCount(int[] guessNumber, int[] answer) {
+        bulls = 0;
+        cows = 0;
         for (int i = 0; i < answerLength; i++) {
             if (guessNumber[i] == answer[i]) {
                 bulls++;
@@ -83,7 +92,7 @@ public class Game {
         }
     }
 
-    private int[] generateAnswer() {
+    private int[] generateAnswer(int length) {
         int[] validNumbers = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
         Random gen = new Random();
         for (int i = 0; i < 9; i++) {
@@ -92,6 +101,6 @@ public class Game {
             validNumbers[i] = validNumbers[j];
             validNumbers[j] = temp;
         }
-        return Arrays.copyOf(validNumbers, answerLength);
+        return Arrays.copyOf(validNumbers, length);
     }
 }

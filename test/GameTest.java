@@ -22,7 +22,7 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        this.game = new Game(4);
+        this.game = new Game(new int[]{1,2,3,4});
     }
 
     @Test
