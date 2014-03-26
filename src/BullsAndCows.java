@@ -17,7 +17,7 @@ public class BullsAndCows {
 
         System.out.print("Guess a 4-digit number with no duplicate digits: ");
         boolean guess = false;
-        Game game = new Game(ANSWER_LENGTH);
+        Game game = new Game(new RandomNumberGenerator(ANSWER_LENGTH));
 
         do {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

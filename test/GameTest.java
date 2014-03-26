@@ -4,6 +4,8 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,7 +20,10 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        this.game = new Game(new int[]{1, 2, 3, 4});
+//        this.game = new Game(new int[]{1, 2, 3, 4});
+        RandomNumberGenerator generator = mock(RandomNumberGenerator.class);
+        when(generator.run()).thenReturn(new int[]{1,2,3,4});
+        this.game = new Game(generator);
     }
 
     @Test
@@ -56,6 +61,16 @@ public class GameTest {
     public void should_throw_exception_when_input_number_not_in_1_to_9() {
         try {
             game.run("0123");
+            fail();
+        } catch (InputNotValidException e) {
+            assertThat(e.getMessage(), is("Digit must be a 4-digit number within 1 to 9."));
+        }
+    }
+
+    @Test
+    public void should_throw_exception_when_input_character_not_in_1_to_9() {
+        try {
+            game.run("a123");
             fail();
         } catch (InputNotValidException e) {
             assertThat(e.getMessage(), is("Digit must be a 4-digit number within 1 to 9."));
