@@ -1,9 +1,5 @@
-import com.sun.corba.se.impl.orb.ParserTable;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -22,7 +18,7 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        this.game = new Game(new int[]{1,2,3,4});
+        this.game = new Game(new int[]{1, 2, 3, 4});
     }
 
     @Test
@@ -62,7 +58,7 @@ public class GameTest {
             game.run("0123");
             fail();
         } catch (InputNotValidException e) {
-            assertThat(e.getMessage(),is("Digit must be a 4-digit number within 1 to 9."));
+            assertThat(e.getMessage(), is("Digit must be a 4-digit number within 1 to 9."));
         }
     }
 
@@ -72,7 +68,7 @@ public class GameTest {
             game.run("12345");
             fail();
         } catch (InputNotValidException e) {
-            assertThat(e.getMessage(),is("Digit must be a 4-digit number."));
+            assertThat(e.getMessage(), is("Digit must be a 4-digit number."));
         }
     }
 
@@ -82,7 +78,7 @@ public class GameTest {
             game.run("1233");
             fail();
         } catch (InputNotValidException e) {
-            assertThat(e.getMessage(),is("Digit can not be duplicated."));
+            assertThat(e.getMessage(), is("Digit can not be duplicated."));
         }
     }
 }
